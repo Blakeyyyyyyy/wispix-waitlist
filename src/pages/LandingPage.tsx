@@ -874,19 +874,19 @@ const LandingPage: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-6"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ type: 'spring', duration: 0.5 }}
-            className="bg-white/95 backdrop-blur-xl rounded-3xl p-8 max-w-2xl w-full shadow-2xl relative overflow-hidden border-2"
+            className="bg-white/95 backdrop-blur-xl rounded-2xl md:rounded-3xl p-5 sm:p-8 max-w-sm sm:max-w-xl md:max-w-2xl w-full shadow-2xl relative overflow-hidden border-2 max-h-[85vh] overflow-y-auto"
             style={{ borderColor: '#58EB9A' }}
           >
             {/* Progress Bar */}
-            <div className="mb-8">
-              <div className="flex justify-between text-sm text-gray-500 mb-2">
+            <div className="mb-6 sm:mb-8">
+              <div className="flex justify-between text-xs sm:text-sm text-gray-500 mb-2">
                 <span>Step {currentStep} of 5</span>
                 <span>{Math.round((currentStep / 5) * 100)}%</span>
               </div>
@@ -906,16 +906,16 @@ const LandingPage: React.FC = () => {
               {/* Step 1 - Business Type */}
               {currentStep === 1 && (
                 <>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-4">
                     What type of business do you run?
                   </h3>
-                  <p className="text-gray-600 mb-8">We will personalize your AI setup based on this.</p>
+                  <p className="text-gray-600 text-sm sm:text-base mb-6 sm:mb-8">We will personalize your AI setup based on this.</p>
                   
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {[
                       { 
                         icon: (
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                           </svg>
                         ), 
@@ -923,7 +923,7 @@ const LandingPage: React.FC = () => {
                       },
                       { 
                         icon: (
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                           </svg>
                         ), 
@@ -931,7 +931,7 @@ const LandingPage: React.FC = () => {
                       },
                       { 
                         icon: (
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                           </svg>
                         ), 
@@ -939,7 +939,7 @@ const LandingPage: React.FC = () => {
                       },
                       { 
                         icon: (
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                           </svg>
                         ), 
@@ -947,7 +947,7 @@ const LandingPage: React.FC = () => {
                       },
                       { 
                         icon: (
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                           </svg>
@@ -956,7 +956,7 @@ const LandingPage: React.FC = () => {
                       },
                       { 
                         icon: (
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                           </svg>
                         ), 
@@ -966,13 +966,13 @@ const LandingPage: React.FC = () => {
                       <button
                         key={index}
                         onClick={() => handleQuestionAnswer(option.text)}
-                        className="group p-6 border-2 border-gray-200 rounded-2xl hover:border-green-400 hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 transition-all duration-300 text-left hover:shadow-lg hover:-translate-y-1"
+                        className="group p-4 sm:p-6 border-2 border-gray-200 rounded-2xl hover:border-green-400 hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 active:border-green-500 active:bg-green-50 active:scale-[0.98] transition-all duration-200 text-left hover:shadow-lg hover:-translate-y-1"
                       >
-                        <div className="flex items-center gap-4">
-                          <div className="p-3 bg-gradient-to-br from-green-100 to-blue-100 group-hover:from-green-200 group-hover:to-blue-200 rounded-xl transition-all duration-300 text-green-600">
+                        <div className="flex items-center gap-3 sm:gap-4">
+                          <div className="p-2.5 sm:p-3 bg-gradient-to-br from-green-100 to-blue-100 group-hover:from-green-200 group-hover:to-blue-200 rounded-xl transition-all duration-300 text-green-600">
                             {option.icon}
                           </div>
-                          <div className="font-semibold text-gray-900 group-hover:text-gray-800">{option.text}</div>
+                          <div className="font-semibold text-gray-900 group-hover:text-gray-800 text-sm sm:text-base">{option.text}</div>
                         </div>
                       </button>
                     ))}
@@ -983,15 +983,15 @@ const LandingPage: React.FC = () => {
               {/* Step 2 - Automation Goal */}
               {currentStep === 2 && (
                 <>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-4">
                     What is the first task you would love your AI employee to take off your plate?
                   </h3>
                   
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {[
                       { 
                         icon: (
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                           </svg>
                         ), 
@@ -999,7 +999,7 @@ const LandingPage: React.FC = () => {
                       },
                       { 
                         icon: (
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3a4 4 0 118 0v4m-4 12a4 4 0 01-4-4v-2a4 4 0 014-4h8a4 4 0 014 4v2a4 4 0 01-4 4H8z" />
                           </svg>
                         ), 
@@ -1007,7 +1007,7 @@ const LandingPage: React.FC = () => {
                       },
                       { 
                         icon: (
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                           </svg>
                         ), 
@@ -1015,7 +1015,7 @@ const LandingPage: React.FC = () => {
                       },
                       { 
                         icon: (
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                           </svg>
                         ), 
@@ -1023,7 +1023,7 @@ const LandingPage: React.FC = () => {
                       },
                       { 
                         icon: (
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                           </svg>
                         ), 
@@ -1031,7 +1031,7 @@ const LandingPage: React.FC = () => {
                       },
                       { 
                         icon: (
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
                           </svg>
                         ), 
@@ -1042,13 +1042,13 @@ const LandingPage: React.FC = () => {
                       <button
                         key={index}
                         onClick={() => option.isCustom ? setShowCustomInput(true) : handleQuestionAnswer(option.text)}
-                        className="group p-6 border-2 border-gray-200 rounded-2xl hover:border-green-400 hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 transition-all duration-300 text-left hover:shadow-lg hover:-translate-y-1"
+                        className="group p-4 sm:p-6 border-2 border-gray-200 rounded-2xl hover:border-green-400 hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 active:border-green-500 active:bg-green-50 active:scale-[0.98] transition-all duration-200 text-left hover:shadow-lg hover:-translate-y-1"
                       >
-                        <div className="flex items-center gap-4">
-                          <div className="p-3 bg-gradient-to-br from-green-100 to-blue-100 group-hover:from-green-200 group-hover:to-blue-200 rounded-xl transition-all duration-300 text-green-600">
+                        <div className="flex items-center gap-3 sm:gap-4">
+                          <div className="p-2.5 sm:p-3 bg-gradient-to-br from-green-100 to-blue-100 group-hover:from-green-200 group-hover:to-blue-200 rounded-xl transition-all duration-300 text-green-600">
                             {option.icon}
                           </div>
-                          <div className="font-semibold text-gray-900 group-hover:text-gray-800">{option.text}</div>
+                          <div className="font-semibold text-gray-900 group-hover:text-gray-800 text-sm sm:text-base">{option.text}</div>
                         </div>
                       </button>
                     ))}
@@ -1115,7 +1115,7 @@ const LandingPage: React.FC = () => {
                       <button
                         key={index}
                         onClick={() => handleQuestionAnswer(option.level)}
-                        className="group w-full p-6 border-2 border-gray-200 rounded-2xl hover:border-green-400 hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 transition-all duration-300 text-left hover:shadow-lg hover:-translate-y-1"
+                        className="group w-full p-6 border-2 border-gray-200 rounded-2xl hover:border-green-400 hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 active:border-green-500 active:bg-green-50 active:scale-[0.98] transition-all duration-200 text-left hover:shadow-lg hover:-translate-y-1"
                       >
                         <div className="flex items-center gap-4">
                           <div className="p-3 bg-gradient-to-br from-green-100 to-blue-100 group-hover:from-green-200 group-hover:to-blue-200 rounded-xl transition-all duration-300 text-green-600">
@@ -1149,7 +1149,7 @@ const LandingPage: React.FC = () => {
                       <button
                         key={index}
                         onClick={() => handleQuestionAnswer(option)}
-                        className="w-full p-4 border-2 border-gray-200 rounded-xl hover:border-green-400 hover:bg-green-50 transition-all text-left"
+                        className="w-full p-4 border-2 border-gray-200 rounded-xl hover:border-green-400 hover:bg-green-50 active:border-green-500 active:bg-green-50 active:scale-[0.98] transition-all duration-200 text-left"
                       >
                         <div className="font-medium text-gray-900">{option}</div>
                       </button>
@@ -1196,7 +1196,7 @@ const LandingPage: React.FC = () => {
                       <button
                         key={index}
                         onClick={() => handleQuestionAnswer(option.text)}
-                        className="group w-full p-6 border-2 border-gray-200 rounded-2xl hover:border-green-400 hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 transition-all duration-300 text-left hover:shadow-lg hover:-translate-y-1"
+                        className="group w-full p-6 border-2 border-gray-200 rounded-2xl hover:border-green-400 hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 active:border-green-500 active:bg-green-50 active:scale-[0.98] transition-all duration-200 text-left hover:shadow-lg hover:-translate-y-1"
                       >
                         <div className="flex items-center gap-4">
                           <div className="p-3 bg-gradient-to-br from-green-100 to-blue-100 group-hover:from-green-200 group-hover:to-blue-200 rounded-xl transition-all duration-300 text-green-600">
