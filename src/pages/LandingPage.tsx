@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useChatContext } from '@/context/ChatContext';
 
 const LandingPage: React.FC = () => {
-  const navigate = useNavigate();
-  const { setInitialMessage } = useChatContext();
   const [heroInput, setHeroInput] = useState('');
-  const [demoInput, setDemoInput] = useState('');
-  const [showDemoResponse, setShowDemoResponse] = useState(false);
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
   const [waitlistName, setWaitlistName] = useState('');
   const [waitlistEmail, setWaitlistEmail] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitted] = useState(false);
   const [showQuestionFlow, setShowQuestionFlow] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [questionAnswers, setQuestionAnswers] = useState({
@@ -47,7 +41,7 @@ const LandingPage: React.FC = () => {
 
   // Send data to webhook
   const sendToWebhook = async (data: any) => {
-    const webhookUrl = import.meta.env.VITE_WEBHOOK_URL || 'https://novusautomations.net/webhook/cba008b1-9ed3-4576-9eba-6d3854c5c344';
+    const webhookUrl = (import.meta as any).env?.VITE_WEBHOOK_URL || 'https://novusautomations.net/webhook/cba008b1-9ed3-4576-9eba-6d3854c5c344';
     
     if (!isValidWebhookUrl(webhookUrl)) {
       console.error('Invalid webhook URL configuration.');
@@ -275,14 +269,6 @@ const LandingPage: React.FC = () => {
     }
   };
 
-  const handleDemoInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDemoInput(e.target.value);
-    if (e.target.value.length > 10) {
-      setTimeout(() => {
-        setShowDemoResponse(true);
-      }, 2000);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
@@ -735,7 +721,7 @@ const LandingPage: React.FC = () => {
             
 
             <div className="flex gap-6">
-              {['twitter', 'linkedin', 'github'].map((social, idx) => (
+              {['twitter', 'linkedin', 'github'].map((_, idx) => (
                 <a
                   key={idx}
                   href="#"
