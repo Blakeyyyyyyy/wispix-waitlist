@@ -99,6 +99,11 @@ const LandingPage: React.FC = () => {
     { icon: "email", text: "Send personalized follow-up emails" }
   ];
 
+  // Limit suggestions to 2 on small screens for better fit
+  const visibleSuggestions = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width: 640px)').matches
+    ? suggestions.slice(0, 2)
+    : suggestions;
+
   const placeholders = [
     "Ask WispixAI to create an agent that monitors customer feedback and generates reports",
     "Ask WispixAI to create an agent that qualifies inbound leads and schedules demos",
@@ -275,14 +280,14 @@ const LandingPage: React.FC = () => {
       {/* Navigation - Glass Morphism Header */}
       <header className="sticky top-4 z-50 px-4">
         <div 
-          className="mx-auto max-w-6xl rounded-full shadow-lg border border-white/20"
+          className="mx-auto max-w-6xl rounded-2xl md:rounded-full shadow-lg border border-white/20"
           style={{
             background: 'rgba(255, 255, 255, 0.7)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
           }}
         >
-          <div className="h-16 md:h-18 px-6 md:px-8 flex items-center justify-between">
+          <div className="h-14 md:h-18 px-4 md:px-8 flex items-center justify-between">
             {/* WISPIX Brand */}
             <span 
               className="text-xl md:text-2xl text-black"
@@ -298,7 +303,7 @@ const LandingPage: React.FC = () => {
             <nav className="flex items-center">
               <button 
                 onClick={() => setShowWaitlistModal(true)}
-                className="px-6 py-2 text-white rounded-full font-semibold text-sm transition-all hover:scale-105 shadow-lg"
+                className="px-4 md:px-6 py-2 text-white rounded-full font-semibold text-sm transition-all hover:scale-105 shadow-lg"
                 style={{ backgroundColor: '#58EB9A' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#4ADE80'} 
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#58EB9A'}
@@ -350,7 +355,7 @@ const LandingPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-6xl md:text-7xl font-extrabold leading-tight mb-6 tracking-tight"
+            className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-[1.15] md:leading-tight mb-6 tracking-tight"
           >
             Your AI Workforce.<br />
             <span style={{ color: '#000000' }}>Built in chat, working in minutes.</span>
@@ -360,7 +365,7 @@ const LandingPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto"
+            className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 md:mb-10 max-w-2xl mx-auto"
           >
             Deploy AI Agents that automate everything by chatting with AI
           </motion.p>
@@ -370,7 +375,7 @@ const LandingPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="max-w-4xl mx-auto mb-10 relative"
+            className="max-w-xl md:max-w-4xl mx-auto mb-8 md:mb-10 relative"
           >
             {/* Green glow effect behind chat box */}
             <div className="absolute inset-0 -z-10">
@@ -396,10 +401,10 @@ const LandingPage: React.FC = () => {
                 onChange={(e) => setHeroInput(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder={currentPlaceholder}
-                className="w-full px-6 py-12 text-lg text-gray-900 bg-transparent border-none outline-none placeholder:text-gray-500 resize-none overflow-hidden min-h-[120px]"
+                className="w-full px-4 md:px-6 py-8 md:py-12 text-base md:text-lg text-gray-900 bg-transparent border-none outline-none placeholder:text-gray-500 resize-none overflow-hidden min-h-[100px] md:min-h-[120px]"
                 rows={3}
               />
-              <div className="flex justify-between items-center px-4 py-3 border-t border-black/5 bg-white/50">
+              <div className="flex flex-row justify-between items-center gap-3 px-3 md:px-4 py-2 border-t border-black/5 bg-white/50">
                 <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-2xl text-gray-600 hover:bg-gray-50 text-sm font-medium transition-all" onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#58EB9A'; e.currentTarget.style.color = '#58EB9A'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#d1d5db'; e.currentTarget.style.color = '#6b7280'; }}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -420,12 +425,12 @@ const LandingPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex gap-3 flex-wrap justify-center mt-8">
-              {suggestions.map((suggestion, index) => (
+            <div className="flex gap-2 md:gap-3 flex-wrap justify-center mt-6 md:mt-8">
+              {visibleSuggestions.map((suggestion, index) => (
                 <button
                   key={index}
                   onClick={() => handleSuggestionClick(suggestion)}
-                  className="px-6 py-3 bg-white/90 border border-black/10 rounded-3xl text-gray-700 hover:bg-white hover:text-gray-900 transition-all hover:-translate-y-1 shadow-lg backdrop-blur-lg font-medium flex items-center gap-3"
+                  className="px-3 md:px-6 py-2.5 md:py-3 bg-white/90 border border-black/10 rounded-3xl text-gray-700 hover:bg-white hover:text-gray-900 transition-all hover:-translate-y-1 shadow-lg backdrop-blur-lg font-medium flex items-center gap-2 md:gap-3 text-sm md:text-base"
                   onMouseEnter={(e) => e.currentTarget.style.borderColor = '#58EB9A'}
                   onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.1)'}
                 >
@@ -442,7 +447,7 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Value Proposition Section */}
-      <section className="relative py-32 bg-white">
+      <section className="relative py-16 md:py-32 bg-white">
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -451,13 +456,13 @@ const LandingPage: React.FC = () => {
             viewport={{ once: true }}
             className="space-y-8"
           >
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal leading-tight text-gray-900">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-normal leading-snug md:leading-tight text-gray-900">
               <span className="font-normal text-gray-900">Wispix is your AI operator that</span>{' '}
               <span className="font-semibold text-gray-900">builds, manages & fixes</span>{' '}
               <span className="font-normal text-gray-900">your AI agents and Automations.</span>
             </h2>
             
-            <p className="text-4xl md:text-5xl font-light text-gray-400 leading-relaxed">
+            <p className="text-xl sm:text-2xl md:text-5xl font-light text-gray-400 leading-relaxed">
               Say goodbye to "failed automation emails" & agency retainers
             </p>
           </motion.div>
@@ -465,9 +470,9 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* 3-Card Section */}
-      <section className="relative py-32 bg-gradient-to-b from-white to-gray-50">
+      <section className="relative py-16 md:py-32 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             
             {/* Card 1: Your Exact Image */}
             <motion.div
@@ -478,7 +483,7 @@ const LandingPage: React.FC = () => {
               className="relative group"
             >
               <div 
-                className="relative bg-white/90 backdrop-blur-xl border border-gray-200 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full min-h-[400px]"
+                className="relative bg-white/90 backdrop-blur-xl border border-gray-200 rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full min-h-[320px] md:min-h-[400px]"
                 style={{
                   background: 'rgba(255, 255, 255, 0.9)',
                   backdropFilter: 'blur(20px)',
@@ -488,8 +493,8 @@ const LandingPage: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-400/5 to-pink-400/5 rounded-3xl"></div>
                 
                 <div className="relative z-10">
-                  <div className="text-center mb-6">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Ask Wispix to automate Anything</h3>
+                  <div className="text-center mb-4 md:mb-6">
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Ask Wispix to automate Anything</h3>
                   </div>
                   
                   {/* Your Exact Image */}
@@ -497,7 +502,7 @@ const LandingPage: React.FC = () => {
                     <img 
                       src="/images/card1-image.png" 
                       alt="Wispix automation interface" 
-                      className="w-full h-auto rounded-2xl shadow-sm"
+                      className="w-full h-auto rounded-xl md:rounded-2xl shadow-sm"
                     />
                   </div>
                 </div>
@@ -513,7 +518,7 @@ const LandingPage: React.FC = () => {
               className="relative group"
             >
               <div 
-                className="relative bg-white/90 backdrop-blur-xl border border-gray-200 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full min-h-[400px]"
+                className="relative bg-white/90 backdrop-blur-xl border border-gray-200 rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full min-h-[320px] md:min-h-[400px]"
                 style={{
                   background: 'rgba(255, 255, 255, 0.9)',
                   backdropFilter: 'blur(20px)',
@@ -523,9 +528,9 @@ const LandingPage: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-400/5 to-green-400/5 rounded-3xl"></div>
                 
                 <div className="relative z-10">
-                  <div className="text-center mb-6">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Connect your apps</h3>
-                    <p className="text-lg text-gray-600 mb-6">Hundreds of integrations available</p>
+                  <div className="text-center mb-4 md:mb-6">
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">Connect your apps</h3>
+                    <p className="text-base md:text-lg text-gray-600 mb-4 md:mb-6">Hundreds of integrations available</p>
                   </div>
                   
                   {/* Your Exact Screenshot */}
@@ -533,7 +538,7 @@ const LandingPage: React.FC = () => {
                     <img 
                       src="/images/middle-card.png" 
                       alt="Platform integrations" 
-                      className="w-full h-auto rounded-2xl shadow-sm"
+                      className="w-full h-auto rounded-xl md:rounded-2xl shadow-sm"
                     />
                   </div>
                 </div>
@@ -549,7 +554,7 @@ const LandingPage: React.FC = () => {
               className="relative group"
             >
               <div 
-                className="relative bg-white/90 backdrop-blur-xl border border-gray-200 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full min-h-[400px]"
+                className="relative bg-white/90 backdrop-blur-xl border border-gray-200 rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full min-h-[320px] md:min-h-[400px]"
                 style={{
                   background: 'rgba(255, 255, 255, 0.9)',
                   backdropFilter: 'blur(20px)',
@@ -559,15 +564,15 @@ const LandingPage: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-green-400/5 to-purple-400/5 rounded-3xl"></div>
                 
                 <div className="relative z-10">
-                  <div className="text-center mb-6">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Watch it work</h3>
-                    <p className="text-lg text-gray-600 mb-6">Your automation comes to life</p>
+                  <div className="text-center mb-4 md:mb-6">
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">Watch it work</h3>
+                    <p className="text-base md:text-lg text-gray-600 mb-4 md:mb-6">Your automation comes to life</p>
                   </div>
                   
                   {/* Workflow Flowchart with Real Logos */}
-                  <div className="space-y-3">
+                  <div className="space-y-2 md:space-y-3">
                     {/* Step 1: Trigger - Gmail */}
-                    <div className="flex items-center gap-3 bg-white/80 rounded-xl p-3 border border-gray-200 shadow-sm">
+                    <div className="flex items-center gap-3 bg-white/80 rounded-lg md:rounded-xl p-3 border border-gray-200 shadow-sm">
                       <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-200">
                         <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" height="20" id="Layer_1" viewBox="0 0 32 32" width="20">
                           <path d="M16.58,19.1068l-12.69-8.0757A3,3,0,0,1,7.1109,5.97l9.31,5.9243L24.78,6.0428A3,3,0,0,1,28.22,10.9579Z" fill="#ea4435"/>
@@ -579,7 +584,7 @@ const LandingPage: React.FC = () => {
                       </div>
                       <div className="flex-1">
                         <div className="text-xs font-medium text-gray-500 uppercase">Trigger</div>
-                        <div className="text-sm font-semibold text-gray-900">New email arrives</div>
+                        <div className="text-xs md:text-sm font-semibold text-gray-900">New email arrives</div>
                         <div className="text-xs text-gray-500">Gmail</div>
                       </div>
                     </div>
@@ -590,7 +595,7 @@ const LandingPage: React.FC = () => {
                     </div>
                     
                     {/* Step 2: Action - Airtable */}
-                    <div className="flex items-center gap-3 bg-white/80 rounded-xl p-3 border border-gray-200 shadow-sm">
+                    <div className="flex items-center gap-3 bg-white/80 rounded-lg md:rounded-xl p-3 border border-gray-200 shadow-sm">
                       <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-200">
                         <svg viewBox="0 -20.5 256 256" fill="none" width="20" height="20">
                           <g>
@@ -602,7 +607,7 @@ const LandingPage: React.FC = () => {
                       </div>
                       <div className="flex-1">
                         <div className="text-xs font-medium text-gray-500 uppercase">Action</div>
-                        <div className="text-sm font-semibold text-gray-900">Create Airtable record</div>
+                        <div className="text-xs md:text-sm font-semibold text-gray-900">Create Airtable record</div>
                         <div className="text-xs text-gray-500">Airtable</div>
                       </div>
                     </div>
@@ -613,7 +618,7 @@ const LandingPage: React.FC = () => {
                     </div>
                     
                     {/* Step 3: Action - Slack */}
-                    <div className="flex items-center gap-3 bg-white/80 rounded-xl p-3 border border-gray-200 shadow-sm">
+                    <div className="flex items-center gap-3 bg-white/80 rounded-lg md:rounded-xl p-3 border border-gray-200 shadow-sm">
                       <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-200">
                         <svg viewBox="0 0 64 64" fill="none" width="20" height="20">
                           <path d="m 17.777788,40.309957 c 0,-3.728276 2.81916,-6.729717 6.320986,-6.729717 3.501827,0 6.320986,3.001441 6.320986,6.729717 v 16.56525 c 0,3.728197 -2.819159,6.729717 -6.320986,6.729717 -3.501826,0 -6.320986,-3.00152 -6.320986,-6.729717 z" fill="#e01e5a"/>
@@ -624,7 +629,7 @@ const LandingPage: React.FC = () => {
                       </div>
                       <div className="flex-1">
                         <div className="text-xs font-medium text-gray-500 uppercase">Action</div>
-                        <div className="text-sm font-semibold text-gray-900">Send Slack notification</div>
+                        <div className="text-xs md:text-sm font-semibold text-gray-900">Send Slack notification</div>
                         <div className="text-xs text-gray-500">Slack</div>
                       </div>
                     </div>
@@ -643,7 +648,7 @@ const LandingPage: React.FC = () => {
 
 
       {/* SECTION 7: Final CTA */}
-      <section className="relative py-32 bg-white overflow-hidden">
+      <section className="relative py-16 md:py-32 bg-white overflow-hidden">
         <div className="max-w-4xl mx-auto px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -652,7 +657,7 @@ const LandingPage: React.FC = () => {
             viewport={{ once: true }}
             className="text-center"
           >
-            <h2 className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-gray-900 mb-8 md:mb-12">
               Lock In Your Founding Spot
             </h2>
 
@@ -664,7 +669,7 @@ const LandingPage: React.FC = () => {
               className="relative"
             >
               <div 
-                className="bg-white/90 backdrop-blur-xl border-2 rounded-3xl p-10 shadow-2xl"
+                className="bg-white/90 backdrop-blur-xl border-2 rounded-2xl md:rounded-3xl p-6 md:p-10 shadow-2xl"
                 style={{
                   borderColor: 'rgba(88, 235, 154, 0.4)',
                   background: 'rgba(255, 255, 255, 0.95)',
@@ -674,7 +679,7 @@ const LandingPage: React.FC = () => {
               >
                 <button
                   onClick={() => setShowWaitlistModal(true)}
-                  className="w-full text-white py-6 rounded-2xl font-black text-2xl md:text-3xl transition-all hover:scale-105 shadow-2xl relative overflow-hidden group mb-8"
+                  className="w-full text-white py-4 md:py-6 rounded-xl md:rounded-2xl font-black text-xl md:text-3xl transition-all hover:scale-105 shadow-2xl relative overflow-hidden group mb-6 md:mb-8"
                   style={{ backgroundColor: '#58EB9A' }}
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#4ADE80'}
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#58EB9A'}
@@ -683,7 +688,7 @@ const LandingPage: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-blue-400 opacity-0 group-hover:opacity-20 transition-opacity"></div>
                 </button>
 
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   {[
                     { icon: "✓", text: "Lifetime founding pricing locked" },
                     { icon: "✓", text: "Direct founder access & setup call" },
@@ -691,8 +696,8 @@ const LandingPage: React.FC = () => {
                     { icon: "✓", text: "Private channel with the Wispix team" },
                     { icon: "✓", text: "No credit card required" }
                   ].map((item, idx) => (
-                    <div key={idx} className="flex items-center justify-center gap-3 text-lg md:text-xl font-semibold text-gray-700">
-                      <span className="text-green-600 text-2xl">{item.icon}</span>
+                    <div key={idx} className="flex items-center justify-center gap-2 md:gap-3 text-base md:text-xl font-semibold text-gray-700">
+                      <span className="text-green-600 text-xl md:text-2xl">{item.icon}</span>
                       <span>{item.text}</span>
                     </div>
                   ))}
@@ -704,12 +709,12 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 bg-gradient-to-b from-white to-gray-50 border-t border-gray-200">
+      <footer className="py-10 md:py-12 bg-gradient-to-b from-white to-gray-50 border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8">
             <div className="flex items-center gap-3">
               <span 
-                className="text-xl md:text-2xl text-black"
+                className="text-lg md:text-2xl text-black"
                 style={{ 
                   fontFamily: 'Poppins, -apple-system, BlinkMacSystemFont, sans-serif',
                   fontWeight: '600'
@@ -720,21 +725,21 @@ const LandingPage: React.FC = () => {
             </div>
             
 
-            <div className="flex gap-6">
+            <div className="flex gap-4 md:gap-6">
               {['twitter', 'linkedin', 'github'].map((_, idx) => (
                 <a
                   key={idx}
                   href="#"
-                  className="w-10 h-10 bg-white border border-gray-200 rounded-lg flex items-center justify-center hover:border-green-400 transition-all hover:shadow-lg"
+                  className="w-9 h-9 md:w-10 md:h-10 bg-white border border-gray-200 rounded-lg flex items-center justify-center hover:border-green-400 transition-all hover:shadow-lg"
                   style={{ backdropFilter: 'blur(10px)' }}
                 >
-                  <div className="w-5 h-5 bg-gray-400 rounded"></div>
+                  <div className="w-4 h-4 md:w-5 md:h-5 bg-gray-400 rounded"></div>
                 </a>
               ))}
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-gray-200 text-center text-gray-500 text-sm">
+          <div className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-gray-200 text-center text-gray-500 text-xs md:text-sm">
             © 2025 WispixAI. All rights reserved. Built with AI for AI.
           </div>
         </div>
@@ -746,7 +751,7 @@ const LandingPage: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-6"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6"
           onClick={() => !isSubmitted && setShowWaitlistModal(false)}
         >
           <motion.div
@@ -754,7 +759,7 @@ const LandingPage: React.FC = () => {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ type: 'spring', duration: 0.5 }}
-            className="bg-white/95 backdrop-blur-xl rounded-3xl p-10 max-w-md w-full shadow-2xl relative overflow-hidden border-2"
+            className="bg-white/95 backdrop-blur-xl rounded-2xl md:rounded-3xl p-6 md:p-10 max-w-sm md:max-w-md w-full shadow-2xl relative overflow-hidden border-2"
             style={{ borderColor: '#58EB9A' }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -786,28 +791,28 @@ const LandingPage: React.FC = () => {
               {!isSubmitted ? (
                 <>
                   <div className="text-center mb-8">
-                    <div className="text-5xl mb-4">✨</div>
-                    <h3 className="text-3xl font-bold text-gray-900 mb-3">
+                    <div className="text-4xl md:text-5xl mb-3 md:mb-4">✨</div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 md:mb-3">
                       You're early!
                     </h3>
-                    <p className="text-lg text-gray-600">
+                    <p className="text-base md:text-lg text-gray-600">
                       Join the Wispix Waitlist to get your AI employee built for free.
                     </p>
                     {heroInput && (
-                      <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-xl">
-                        <p className="text-sm text-green-700 font-medium mb-1">Your automation idea:</p>
-                        <p className="text-green-800 italic">"{heroInput}"</p>
+                    <div className="mt-3 md:mt-4 p-3 md:p-4 bg-green-50 border border-green-200 rounded-xl">
+                        <p className="text-xs md:text-sm text-green-700 font-medium mb-1">Your automation idea:</p>
+                        <p className="text-green-800 italic text-sm md:text-base">"{heroInput}"</p>
                       </div>
                     )}
                   </div>
 
-                  <div className="space-y-4 mb-6">
+                  <div className="space-y-3 md:space-y-4 mb-4 md:mb-6">
                     <input
                       type="text"
                       placeholder="Your name"
                       value={waitlistName}
                       onChange={(e) => setWaitlistName(e.target.value)}
-                      className="w-full px-5 py-4 bg-white border-2 border-gray-200 rounded-xl text-base outline-none transition-all focus:border-green-400 focus:shadow-lg"
+                      className="w-full px-4 md:px-5 py-3 md:py-4 bg-white border-2 border-gray-200 rounded-xl text-base outline-none transition-all focus:border-green-400 focus:shadow-lg"
                       onFocus={(e) => e.currentTarget.style.borderColor = '#58EB9A'}
                       onBlur={(e) => e.currentTarget.style.borderColor = '#e5e7eb'}
                     />
@@ -819,20 +824,20 @@ const LandingPage: React.FC = () => {
                         setWaitlistEmail(e.target.value);
                         if (emailError) setEmailError(''); // Clear error when typing
                       }}
-                      className={`w-full px-5 py-4 bg-white border-2 rounded-xl text-base outline-none transition-all focus:shadow-lg ${
+                      className={`w-full px-4 md:px-5 py-3 md:py-4 bg-white border-2 rounded-xl text-base outline-none transition-all focus:shadow-lg ${
                         emailError ? 'border-red-400' : 'border-gray-200 focus:border-green-400'
                       }`}
                       onFocus={(e) => e.currentTarget.style.borderColor = emailError ? '#f87171' : '#58EB9A'}
                       onBlur={(e) => e.currentTarget.style.borderColor = emailError ? '#f87171' : '#e5e7eb'}
                     />
                     {emailError && (
-                      <p className="text-red-500 text-sm mt-1">{emailError}</p>
+                    <p className="text-red-500 text-xs md:text-sm mt-1">{emailError}</p>
                     )}
                   </div>
 
                   <button
                     onClick={handleWaitlistSubmit}
-                    className="w-full text-white py-4 rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-lg mb-4"
+                    className="w-full text-white py-3 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all hover:scale-105 shadow-lg mb-3 md:mb-4"
                     style={{ backgroundColor: '#58EB9A' }}
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#4ADE80'}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#58EB9A'}
@@ -842,7 +847,7 @@ const LandingPage: React.FC = () => {
 
                   <button
                     onClick={() => setShowWaitlistModal(false)}
-                    className="w-full text-gray-500 hover:text-gray-700 text-sm font-medium"
+                    className="w-full text-gray-500 hover:text-gray-700 text-xs md:text-sm font-medium"
                   >
                     Maybe later
                   </button>
