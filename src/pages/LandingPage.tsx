@@ -441,6 +441,19 @@ const LandingPage: React.FC = () => {
                 </button>
               ))}
             </div>
+
+            {/* Quick Join Waitlist CTA */}
+            <div className="mt-6 md:mt-8 flex justify-center">
+              <button
+                onClick={() => setShowWaitlistModal(true)}
+                className="px-5 md:px-7 py-3 md:py-3.5 rounded-full font-semibold text-sm md:text-base text-white shadow-lg transition-all hover:scale-[1.03]"
+                style={{ backgroundColor: '#58EB9A' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#4ADE80'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#58EB9A'}
+              >
+                Get Early Access To Wispix AI
+              </button>
+            </div>
           </motion.div>
 
         </div>
