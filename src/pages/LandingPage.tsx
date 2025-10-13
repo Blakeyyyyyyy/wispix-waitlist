@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import SplashCursor from '../components/ui/splash-cursor';
 import { motion } from 'framer-motion';
+import { RainbowButton } from '../components/ui/rainbow-button';
 
 const LandingPage: React.FC = () => {
   const [heroInput, setHeroInput] = useState('');
@@ -276,27 +276,8 @@ const LandingPage: React.FC = () => {
   };
 
 
-  const [showSplash, setShowSplash] = useState(true);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const threshold = 800; // run only near the top sections
-      setShowSplash(window.scrollY < threshold);
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
   return (
     <div className="min-h-screen bg-white text-gray-900">
-      {/* Hero-only fluid cursor effect */}
-      {/* Desktop-only (avoid heavy WebGL on small devices); lazy-start on first interaction */}
-      {showSplash && (
-        <div className="hidden md:block">
-          <SplashCursor TRANSPARENT={true} SHADING={false} COLOR_UPDATE_SPEED={5} DYE_RESOLUTION={512} PRESSURE_ITERATIONS={8} CURL={2} SPLAT_FORCE={1800} TARGET_FPS={24} MAX_DEVICE_PIXEL_RATIO={1.25} AUTO_START={false} />
-        </div>
-      )}
       {/* Navigation - Glass Morphism Header */}
       <header className="sticky top-4 z-50 px-4">
         <div 
@@ -463,16 +444,13 @@ const LandingPage: React.FC = () => {
             </div>
 
             {/* Quick Join Waitlist CTA */}
-            <div className="mt-6 md:mt-8 flex justify-center">
-              <button
+            <div className="mt-12 md:mt-16 flex justify-center">
+              <RainbowButton
                 onClick={() => setShowWaitlistModal(true)}
-                className="px-5 md:px-7 py-3 md:py-3.5 rounded-full font-semibold text-sm md:text-base text-white shadow-lg transition-all hover:scale-[1.03]"
-                style={{ backgroundColor: '#58EB9A' }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#4ADE80'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#58EB9A'}
+                className="text-base md:text-lg px-10 md:px-12 py-4 md:py-5 scale-110 bg-black text-white"
               >
                 Get Early Access To Wispix AI
-              </button>
+              </RainbowButton>
             </div>
           </motion.div>
 
