@@ -291,7 +291,12 @@ const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white text-gray-900">
       {/* Hero-only fluid cursor effect */}
-      {showSplash && <SplashCursor TRANSPARENT SHADING COLOR_UPDATE_SPEED={10} />}
+      {/* Desktop-only (avoid heavy WebGL on small devices); lazy-start on first interaction */}
+      {showSplash && (
+        <div className="hidden md:block">
+          <SplashCursor TRANSPARENT={true} SHADING={false} COLOR_UPDATE_SPEED={5} DYE_RESOLUTION={512} PRESSURE_ITERATIONS={8} CURL={2} SPLAT_FORCE={1800} TARGET_FPS={24} MAX_DEVICE_PIXEL_RATIO={1.25} AUTO_START={false} />
+        </div>
+      )}
       {/* Navigation - Glass Morphism Header */}
       <header className="sticky top-4 z-50 px-4">
         <div 

@@ -5,19 +5,23 @@ type RGB = { r: number; g: number; b: number };
 
 export function SplashCursor({
   SIM_RESOLUTION = 128,
-  DYE_RESOLUTION = 1440,
+  DYE_RESOLUTION = 512,
   CAPTURE_RESOLUTION = 512,
   DENSITY_DISSIPATION = 3.5,
   VELOCITY_DISSIPATION = 2,
   PRESSURE = 0.1,
-  PRESSURE_ITERATIONS = 20,
-  CURL = 3,
-  SPLAT_RADIUS = 0.2,
-  SPLAT_FORCE = 6000,
-  SHADING = true,
-  COLOR_UPDATE_SPEED = 10,
+  PRESSURE_ITERATIONS = 8,
+  CURL = 2,
+  SPLAT_RADIUS = 0.15,
+  SPLAT_FORCE = 1800,
+  SHADING = false,
+  COLOR_UPDATE_SPEED = 5,
   BACK_COLOR = { r: 0.5, g: 0, b: 0 } as RGB,
   TRANSPARENT = true,
+  TARGET_FPS = 24,
+  MAX_DEVICE_PIXEL_RATIO = 1.25,
+  AUTO_PAUSE_OFFSCREEN = true,
+  AUTO_START = false,
 }: Partial<{
   SIM_RESOLUTION: number;
   DYE_RESOLUTION: number;
@@ -33,6 +37,10 @@ export function SplashCursor({
   COLOR_UPDATE_SPEED: number;
   BACK_COLOR: RGB;
   TRANSPARENT: boolean;
+  TARGET_FPS: number;
+  MAX_DEVICE_PIXEL_RATIO: number;
+  AUTO_PAUSE_OFFSCREEN: boolean;
+  AUTO_START: boolean;
 }>) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -820,15 +828,28 @@ export function SplashCursor({
     initFramebuffers();
     let lastUpdateTime = Date.now();
     let colorUpdateTimer = 0.0;
+    let animId: number | null = null;
+    let lastFrameTs = performance.now();
+    const minDelta = 1000 / TARGET_FPS;
 
     function updateFrame() {
+      const now = performance.now();
+      if (AUTO_PAUSE_OFFSCREEN && document.hidden) {
+        animId = requestAnimationFrame(updateFrame);
+        return;
+      }
+      if (now - lastFrameTs < minDelta) {
+        animId = requestAnimationFrame(updateFrame);
+        return;
+      }
+      lastFrameTs = now;
       const dt = calcDeltaTime();
       if (resizeCanvas()) initFramebuffers();
       updateColors(dt);
       applyInputs();
       step(dt);
       render(null);
-      requestAnimationFrame(updateFrame);
+      animId = requestAnimationFrame(updateFrame);
     }
 
     function calcDeltaTime() {
@@ -1151,7 +1172,7 @@ export function SplashCursor({
     }
 
     function scaleByPixelRatio(input: number) {
-      const pixelRatio = window.devicePixelRatio || 1;
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, MAX_DEVICE_PIXEL_RATIO);
       return Math.floor(input * pixelRatio);
     }
 
@@ -1178,7 +1199,7 @@ export function SplashCursor({
       let posX = scaleByPixelRatio(e.clientX);
       let posY = scaleByPixelRatio(e.clientY);
       let color = generateColor();
-      updateFrame();
+      startLoop();
       updatePointerMoveData(pointer, posX, posY, color);
       document.body.removeEventListener("mousemove", onFirstMouseMove);
     };
@@ -1197,7 +1218,7 @@ export function SplashCursor({
       for (let i = 0; i < touches.length; i++) {
         let posX = scaleByPixelRatio(touches[i].clientX);
         let posY = scaleByPixelRatio(touches[i].clientY);
-        updateFrame();
+        startLoop();
         updatePointerDownData(pointer, touches[i].identifier, posX, posY);
       }
       document.body.removeEventListener("touchstart", onFirstTouchStart as any);
@@ -1236,7 +1257,12 @@ export function SplashCursor({
     window.addEventListener("touchmove", onTouchMove, { passive: true });
     window.addEventListener("touchend", onTouchEnd);
 
-    updateFrame();
+    function startLoop() {
+      if (animId !== null) return;
+      animId = requestAnimationFrame(updateFrame);
+    }
+
+    if (AUTO_START) startLoop();
 
     return () => {
       window.removeEventListener("mousedown", onMouseDown);
@@ -1246,6 +1272,7 @@ export function SplashCursor({
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
       window.removeEventListener("touchend", onTouchEnd);
+      if (animId !== null) cancelAnimationFrame(animId);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
