@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import SplashCursor from '../components/ui/splash-cursor';
 import { motion } from 'framer-motion';
 
 const LandingPage: React.FC = () => {
@@ -275,8 +276,22 @@ const LandingPage: React.FC = () => {
   };
 
 
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const threshold = 800; // run only near the top sections
+      setShowSplash(window.scrollY < threshold);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white text-gray-900">
+      {/* Hero-only fluid cursor effect */}
+      {showSplash && <SplashCursor TRANSPARENT SHADING COLOR_UPDATE_SPEED={10} />}
       {/* Navigation - Glass Morphism Header */}
       <header className="sticky top-4 z-50 px-4">
         <div 
