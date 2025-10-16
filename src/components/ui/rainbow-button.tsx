@@ -28,7 +28,7 @@ export function RainbowButton({
       )}
       {...props}
     >
-      <span className="relative z-10 bg-black px-6 py-2 rounded-lg">
+      <span className="relative z-10">
         {children}
       </span>
     </button>
