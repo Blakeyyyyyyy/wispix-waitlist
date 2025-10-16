@@ -444,10 +444,10 @@ const LandingPage: React.FC = () => {
             </div>
 
             {/* Quick Join Waitlist CTA */}
-            <div className="mt-12 md:mt-16 flex justify-center">
+            <div className="mt-12 md:mt-16 flex justify-center px-4">
               <RainbowButton
                 onClick={() => setShowWaitlistModal(true)}
-                className="text-base md:text-lg px-10 md:px-12 py-4 md:py-5 scale-110 bg-black text-white"
+                className="text-sm md:text-lg px-6 md:px-12 py-3 md:py-5 w-full max-w-xs md:max-w-none md:scale-110 bg-black text-white"
               >
                 Get Early Access To Wispix AI
               </RainbowButton>
