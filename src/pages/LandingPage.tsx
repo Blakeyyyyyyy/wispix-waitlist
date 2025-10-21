@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RainbowButton } from '../components/ui/rainbow-button';
+import PaymentModal from '../components/PaymentModal';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage: React.FC = () => {
   const [heroInput, setHeroInput] = useState('');
@@ -22,6 +24,8 @@ const LandingPage: React.FC = () => {
   const [showCustomInput, setShowCustomInput] = useState(false);
   const [customInput, setCustomInput] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const navigate = useNavigate();
 
   // Webhook validation
   const isValidWebhookUrl = (url: string): boolean => {
@@ -231,6 +235,22 @@ const LandingPage: React.FC = () => {
     if (e.key === 'Enter') {
       handleHeroSubmit();
     }
+  };
+
+  const handlePaymentSuccess = (paymentIntent: any) => {
+    setShowPaymentModal(false);
+    setShowCelebration(true);
+    // Send payment success to webhook
+    sendToWebhook({
+      type: 'founding_user_payment_success',
+      email: waitlistEmail,
+      name: waitlistName,
+      tracking_id: trackingId,
+      paymentIntent: paymentIntent,
+      timestamp: new Date().toISOString()
+    }).catch(error => {
+      console.error('Webhook error:', error);
+    });
   };
 
   const handleSuggestionClick = (suggestion: { icon: string; text: string }) => {
@@ -688,16 +708,35 @@ const LandingPage: React.FC = () => {
                   WebkitBackdropFilter: 'blur(20px)',
                 }}
               >
-                <button
-                  onClick={() => setShowWaitlistModal(true)}
-                  className="w-full text-white py-4 md:py-6 rounded-xl md:rounded-2xl font-black text-xl md:text-3xl transition-all hover:scale-105 shadow-2xl relative overflow-hidden group mb-6 md:mb-8"
-                  style={{ backgroundColor: '#58EB9A' }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#4ADE80'}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#58EB9A'}
-                >
-                  <span className="relative z-10">Join Hundreds Of Founders & Teams</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-blue-400 opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                </button>
+                <div className="space-y-4 mb-6 md:mb-8">
+                  <button
+                    onClick={() => setShowWaitlistModal(true)}
+                    className="w-full text-white py-4 md:py-6 rounded-xl md:rounded-2xl font-black text-xl md:text-3xl transition-all hover:scale-105 shadow-2xl relative overflow-hidden group"
+                    style={{ backgroundColor: '#58EB9A' }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#4ADE80'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#58EB9A'}
+                  >
+                    <span className="relative z-10">Join Hundreds Of Founders & Teams</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-blue-400 opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                  </button>
+
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="px-4 bg-white text-gray-500 font-medium">or</span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => setShowWaitlistModal(true)}
+                    className="w-full text-white py-4 md:py-6 rounded-xl md:rounded-2xl font-black text-xl md:text-3xl transition-all hover:scale-105 shadow-2xl relative overflow-hidden group bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                  >
+                    <span className="relative z-10">🚀 Lock In Lifetime Access - $299</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-blue-400 opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                  </button>
+                </div>
 
                 <div className="space-y-3 md:space-y-4">
                   {[
@@ -705,7 +744,7 @@ const LandingPage: React.FC = () => {
                     { icon: "✓", text: "Direct founder access & setup call" },
                     { icon: "✓", text: "Shape the product roadmap" },
                     { icon: "✓", text: "Private channel with the Wispix team" },
-                    { icon: "✓", text: "No credit card required" }
+                    { icon: "✓", text: "Free waitlist option available" }
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-center justify-center gap-2 md:gap-3 text-base md:text-xl font-semibold text-gray-700">
                       <span className="text-green-600 text-xl md:text-2xl">{item.icon}</span>
@@ -770,12 +809,10 @@ const LandingPage: React.FC = () => {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ type: 'spring', duration: 0.5 }}
-            className="bg-white/95 backdrop-blur-xl rounded-2xl md:rounded-3xl p-6 md:p-10 max-w-sm md:max-w-md w-full shadow-2xl relative overflow-hidden border-2"
-            style={{ borderColor: '#58EB9A' }}
+            className="bg-white rounded-2xl md:rounded-3xl p-8 md:p-10 max-w-sm md:max-w-md w-full shadow-[0_12px_40px_rgba(0,0,0,0.12)] relative overflow-hidden border border-gray-100"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Glowing border effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 via-blue-400/20 to-purple-400/20 animate-pulse pointer-events-none"></div>
+            {/* Premium modal - minimal chrome */}
             
             {/* Confetti effect */}
             {isSubmitted && (
@@ -802,17 +839,16 @@ const LandingPage: React.FC = () => {
               {!isSubmitted ? (
                 <>
                   <div className="text-center mb-8">
-                    <div className="text-4xl md:text-5xl mb-3 md:mb-4">✨</div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 md:mb-3">
-                      You're early!
+                    <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-gray-900 mb-2 md:mb-3">
+                      You're early
                     </h3>
-                    <p className="text-base md:text-lg text-gray-600">
-                      Join the Wispix Waitlist to get your AI employee built for free.
+                    <p className="text-base md:text-lg text-gray-700">
+                      Join the Wispix waitlist for early access and discounted pricing.
                     </p>
                     {heroInput && (
-                    <div className="mt-3 md:mt-4 p-3 md:p-4 bg-green-50 border border-green-200 rounded-xl">
-                        <p className="text-xs md:text-sm text-green-700 font-medium mb-1">Your automation idea:</p>
-                        <p className="text-green-800 italic text-sm md:text-base">"{heroInput}"</p>
+                    <div className="mt-3 md:mt-4 p-3 md:p-4 bg-gray-50 border border-gray-200 rounded-xl">
+                        <p className="text-xs md:text-sm text-gray-700 font-medium mb-1">Your automation idea:</p>
+                        <p className="text-gray-800 italic text-sm md:text-base">"{heroInput}"</p>
                       </div>
                     )}
                   </div>
@@ -823,8 +859,9 @@ const LandingPage: React.FC = () => {
                       placeholder="Your name"
                       value={waitlistName}
                       onChange={(e) => setWaitlistName(e.target.value)}
-                      className="w-full px-4 md:px-5 py-3 md:py-4 bg-white border-2 border-gray-200 rounded-xl text-base outline-none transition-all focus:border-green-400 focus:shadow-lg"
-                      onFocus={(e) => e.currentTarget.style.borderColor = '#58EB9A'}
+                      required
+                      className="w-full px-4 md:px-5 py-3 md:py-4 bg-white border-2 border-gray-200 rounded-xl text-base outline-none transition-all focus:border-gray-900 focus:shadow-lg"
+                      onFocus={(e) => e.currentTarget.style.borderColor = '#111827'}
                       onBlur={(e) => e.currentTarget.style.borderColor = '#e5e7eb'}
                     />
                     <input
@@ -836,9 +873,9 @@ const LandingPage: React.FC = () => {
                         if (emailError) setEmailError(''); // Clear error when typing
                       }}
                       className={`w-full px-4 md:px-5 py-3 md:py-4 bg-white border-2 rounded-xl text-base outline-none transition-all focus:shadow-lg ${
-                        emailError ? 'border-red-400' : 'border-gray-200 focus:border-green-400'
+                        emailError ? 'border-red-400' : 'border-gray-200 focus:border-gray-900'
                       }`}
-                      onFocus={(e) => e.currentTarget.style.borderColor = emailError ? '#f87171' : '#58EB9A'}
+                      onFocus={(e) => e.currentTarget.style.borderColor = emailError ? '#f87171' : '#111827'}
                       onBlur={(e) => e.currentTarget.style.borderColor = emailError ? '#f87171' : '#e5e7eb'}
                     />
                     {emailError && (
@@ -848,13 +885,34 @@ const LandingPage: React.FC = () => {
 
                   <button
                     onClick={handleWaitlistSubmit}
-                    className="w-full text-white py-3 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all hover:scale-105 shadow-lg mb-3 md:mb-4"
+                    className="w-full text-white py-3 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all hover:scale-105 shadow-lg mb-1 ring-1 ring-green-300/50 hover:shadow-xl"
                     style={{ backgroundColor: '#58EB9A' }}
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#4ADE80'}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#58EB9A'}
                   >
                     Join the Waitlist → Get Early Access
                   </button>
+                  <div className="text-xs md:text-sm text-gray-600 text-center mb-3">
+                    Includes full access + Private Founder/Team Discord + Unlimited AI employees built
+                  </div>
+
+                  <div className="relative mb-3 md:mb-4">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="px-2 bg-white text-gray-500">or</span>
+                    </div>
+                  </div>
+
+                  <RainbowButton
+                    onClick={() => {
+                      navigate('/founders');
+                    }}
+                    className="w-full py-4 md:py-5 text-lg md:text-xl font-bold rounded-2xl leading-tight"
+                  >
+                    Lock In Founding Pricing — $99 Lifetime
+                  </RainbowButton>
 
                   <button
                     onClick={() => setShowWaitlistModal(false)}
@@ -1377,11 +1435,29 @@ const LandingPage: React.FC = () => {
                     🐦 Share on X
                   </button>
                 </div>
+                {/* Add the second founder CTA here to preview Variant B look */}
+                <div className="pt-2">
+                  <RainbowButton
+                    onClick={() => navigate('/founders')}
+                    className="w-full py-4 md:py-5 text-lg md:text-xl font-bold rounded-2xl leading-tight"
+                  >
+                    Lock In Founding Pricing — $99 Lifetime
+                  </RainbowButton>
+                </div>
               </div>
             </div>
           </motion.div>
         </motion.div>
       )}
+
+      {/* Payment Modal */}
+      <PaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        onSuccess={handlePaymentSuccess}
+        userEmail={waitlistEmail}
+        userName={waitlistName}
+      />
     </div>
   );
 };
