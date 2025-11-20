@@ -349,7 +349,7 @@ const LandingPage: React.FC = () => {
             }}
           >
             <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#58EB9A' }}></div>
-            <span>Join Hundreds or businesses already on our waiting list</span>
+            <span>Join Hundreds of businesses already on our waiting list</span>
           </motion.div>
 
           <motion.h1
