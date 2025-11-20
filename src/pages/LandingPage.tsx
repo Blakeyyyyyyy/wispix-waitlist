@@ -358,8 +358,8 @@ const LandingPage: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-[1.15] md:leading-tight mb-6 tracking-tight"
           >
-            Your AI Workforce.<br />
-            <span style={{ color: '#000000' }}>Built in chat, working in minutes.</span>
+            Automate your business,<br />
+            <span style={{ color: '#000000' }}>instantly.</span>
           </motion.h1>
 
           <motion.p
@@ -368,7 +368,7 @@ const LandingPage: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 md:mb-10 max-w-2xl mx-auto"
           >
-            Deploy AI Agents that automate everything by chatting with AI
+            Create and deploy AI automations just by chatting. No complex setup. No learning curve. Just ask.
           </motion.p>
 
           {/* AI Platform Input Box */}
