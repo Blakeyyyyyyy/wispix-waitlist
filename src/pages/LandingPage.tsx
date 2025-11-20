@@ -722,36 +722,15 @@ const LandingPage: React.FC = () => {
       {/* Footer */}
       <footer className="py-10 md:py-12 bg-gradient-to-b from-white to-gray-50 border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8">
-            <div className="flex items-center gap-3">
-              <span 
-                className="text-lg md:text-2xl text-black"
-                style={{ 
-                  fontFamily: 'Poppins, -apple-system, BlinkMacSystemFont, sans-serif',
-                  fontWeight: '600'
-                }}
-              >
-                Wispix AI
-              </span>
+          <div className="text-center">
+            <div className="text-lg md:text-2xl text-black font-semibold mb-2"
+              style={{ 
+                fontFamily: 'Poppins, -apple-system, BlinkMacSystemFont, sans-serif'
+              }}
+            >
+              Wispix AI
             </div>
-            
-
-            <div className="flex gap-4 md:gap-6">
-              {['twitter', 'linkedin', 'github'].map((_, idx) => (
-                <a
-                  key={idx}
-                  href="#"
-                  className="w-9 h-9 md:w-10 md:h-10 bg-white border border-gray-200 rounded-lg flex items-center justify-center hover:border-green-400 transition-all hover:shadow-lg"
-                  style={{ backdropFilter: 'blur(10px)' }}
-                >
-                  <div className="w-4 h-4 md:w-5 md:h-5 bg-gray-400 rounded"></div>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-gray-200 text-center text-gray-500 text-xs md:text-sm">
-            © 2025 WispixAI. All rights reserved. Built with AI for AI.
+            <p className="text-gray-500 text-sm">Made with ❤️ by Wispix team</p>
           </div>
         </div>
       </footer>
